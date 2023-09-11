@@ -268,6 +268,8 @@ def page4():
                 tools[line.split()[0]] = line.split()[1]
             choose_tool = st.selectbox('当前可用的功能包：', [tool for tool in tools.keys()],index = st.session_state.tool_index) 
         if choose_tool != "<未选择>":
+            st.session_state.paramters = {} 
+            # 第一次修改
             module = importlib.import_module("prompt_tool." + tools[choose_tool][:-3])  # 去掉文件名后缀 '.py'
             title, description, paramters, prompt = module.tool()  # 调用函数
             st.divider()
@@ -275,8 +277,6 @@ def page4():
             st.caption(description)
             st.write("参数需求")
             st.write(paramters)
-            st.session_state["messages_t"] = []
-            st.session_state["messages_length_t"] = 0
             st.session_state.paramters = paramters
         else:
             st.session_state.paramters = {}
